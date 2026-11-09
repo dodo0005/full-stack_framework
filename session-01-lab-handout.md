@@ -197,8 +197,9 @@ The home page now uses this default title from the layout. The About page define
 ### Step 6: Break things on purpose (5 min)
 
 * Delete a closing tag in `app/page.tsx` and save. Read the error overlay: which file and line does it point to? Fix it and watch the overlay disappear without a manual refresh.
+![alt text](image.png)
 * Open http://localhost:3000/nope. Next.js shows its built-in 404 page.
-* Rename `app/page.tsx` to `app/home.tsx`. What happens to `/`? Rename it back.
+* Rename `app/page.tsx` to `app/home.tsx`. What happens to `/`? Rename it back. The route will stop working and get 404 
 
 ### Step 7: Commit (5 min)
 
