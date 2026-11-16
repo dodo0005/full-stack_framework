@@ -13,3 +13,9 @@ export async function getMovies(): Promise<Movie[]> {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return movies;
 }
+
+// The id comes from the URL, so it is a string: "2", not 2
+export async function getMovie(id: string): Promise<Movie | undefined> {
+  const all = await getMovies();
+  return all.find((movie) => String(movie.id) === id);
+}
