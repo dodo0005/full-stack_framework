@@ -1,0 +1,24 @@
+
+[
+  {
+    "id": "1",
+    "name": "Sophie Martin",
+    "email": "sophie@example.com",
+    "bio": "I love teaching creative skills and helping people discover new hobbies.",
+    "profileImage": "/profiles/sophie.jpg"
+  },
+  {
+    "id": "2",
+    "name": "Lucas Bernard",
+    "email": "lucas@example.com",
+    "bio": "A passionate programmer who enjoys sharing knowledge about web development.",
+    "profileImage": "/profiles/lucas.jpg"
+  },
+  {
+    "id": "3",
+    "name": "Emma Laurent",
+    "email": "emma@example.com",
+    "bio": "I enjoy languages, cooking, and meeting people from different backgrounds.",
+    "profileImage": "/profiles/emma.jpg"
+  }
+]

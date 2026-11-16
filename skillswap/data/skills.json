@@ -1,0 +1,59 @@
+
+[
+  {
+    "id": "1",
+    "title": "Watercolor Painting",
+    "description": "Learn the basics of watercolor painting, including color mixing, brush techniques, and creating simple landscapes.",
+    "category": "Art",
+    "type": "offered",
+    "userId": "1"
+  },
+  {
+    "id": "2",
+    "title": "Guitar for Beginners",
+    "description": "Learn basic guitar chords, strumming patterns, and how to play your first songs.",
+    "category": "Music",
+    "type": "offered",
+    "userId": "1"
+  },
+  {
+    "id": "3",
+    "title": "Web Development",
+    "description": "Learn the fundamentals of HTML, CSS, JavaScript, and building websites with React.",
+    "category": "Technology",
+    "type": "offered",
+    "userId": "2"
+  },
+  {
+    "id": "4",
+    "title": "French Conversation",
+    "description": "Practice everyday French conversation and improve your confidence speaking the language.",
+    "category": "Languages",
+    "type": "offered",
+    "userId": "3"
+  },
+  {
+    "id": "5",
+    "title": "Photography",
+    "description": "I'm looking to learn photography, especially composition and how to use a camera in manual mode.",
+    "category": "Art",
+    "type": "wanted",
+    "userId": "1"
+  },
+  {
+    "id": "6",
+    "title": "Cooking Italian Food",
+    "description": "I'd love to learn how to make homemade pasta, sauces, and traditional Italian dishes.",
+    "category": "Cooking",
+    "type": "wanted",
+    "userId": "2"
+  },
+  {
+    "id": "7",
+    "title": "JavaScript",
+    "description": "I want to improve my JavaScript skills and understand modern programming concepts.",
+    "category": "Technology",
+    "type": "wanted",
+    "userId": "3"
+  }
+]
