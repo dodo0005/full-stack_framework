@@ -34,3 +34,46 @@ import Button from "@/app/components/Button";
 -Pages load quickly because HTML is generated at build time.
 -The server doesn't need to fetch the data for every visitor.
 -It is better for performance and SEO.
+
+
+# Lab 3
+
+## 1. How can NavLink use usePathname and still appear in the page source?
+
+`NavLink` is a Client Component because it uses the `usePathname()` hook. However, Next.js can render Client Components on the server when generating the initial HTML.
+
+Next.js knows the current URL, so it can determine which navigation link is active and include `aria-current="true"` in the initial HTML. The browser then hydrates the component to make it interactive.
+
+## 2. Why does generateStaticParams return String(movie.id), and why is /movies/42 a 404?
+
+`generateStaticParams()` returns strings because dynamic route parameters are URL segments, and URL parameters are strings.
+
+For example, the movie ID `2` becomes `"2"`.
+
+We use `dynamicParams = false` to tell Next.js that only the IDs returned by `generateStaticParams()` are allowed.
+
+Since movie 42 is not in the generated list, Next.js returns a 404 without executing the movie page component.
+
+## 3. Why does the note stay between /movies and /movies/2 but disappear when visiting /about?
+
+The movies pages share the same nested layout: `app/movies/layout.tsx`.
+
+Next.js preserves this layout during client-side navigation between `/movies` and `/movies/2`. Therefore, the Notes input remains mounted and keeps its value.
+
+The `/about` page does not use the movies layout. When navigating there, the movies layout is unmounted. Returning to `/movies` creates a new layout, so the Notes input is empty.
+
+## 4. Where is the real error message in production, and why is it not sent to the browser?
+
+The real error message is available in the server terminal logs.
+
+Next.js hides detailed server error messages from the browser in production to prevent sensitive information about the application from being exposed.
+
+Instead, the browser receives a generic error message and an error digest that can help identify the error in the server logs.
+
+## 5. Why does Loading the movies... appear in development for /movies/2 but not in production?
+
+In development, Next.js renders pages on demand. Loading the movie data takes time, so the loading component can appear while the page is being rendered.
+
+In production, the individual movie pages have already been prerendered during `npm run build`, so their HTML is ready immediately. The loading component is not needed when opening those pages.
+
+The `/movies` listing still needs to load its data at runtime, so its loading component can still appear.
