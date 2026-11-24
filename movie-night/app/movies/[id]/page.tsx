@@ -8,22 +8,31 @@ export const dynamicParams = false;
 
 // Runs at build time: one HTML page per movie
 export async function generateStaticParams() {
-  const movies = await getMovies();
-  return movies.map((movie) => ({ id: String(movie.id) }));
+  const movies = await getMovies({
+    cache: "force-cache",
+  });
+
+  return movies.map((movie) => ({
+    id: String(movie.id),
+  }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<"/movies/[id]">): Promise<Metadata> {
   const { id } = await params;
-  const movie = await getMovie(id);
+  const movie = await getMovie(id, {
+  cache: "force-cache",
+});
   if (!movie) return {};
   return { title: movie.title };
 }
 
 export default async function MoviePage({ params }: PageProps<"/movies/[id]">) {
   const { id } = await params;
-  const movie = await getMovie(id);
+  const movie = await getMovie(id, {
+  cache: "force-cache",
+});
   if (!movie) notFound();
 
   return (
