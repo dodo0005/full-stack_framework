@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MovieList } from "@/components/movie-list";
 import { getMovies } from "@/lib/movies";
 
+
 export const metadata: Metadata = {
   title: "Movies | Movie Night",
   description: "The movies you can vote for",

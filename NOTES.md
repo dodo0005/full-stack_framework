@@ -77,3 +77,40 @@ In development, Next.js renders pages on demand. Loading the movie data takes ti
 In production, the individual movie pages have already been prerendered during `npm run build`, so their HTML is ready immediately. The loading component is not needed when opening those pages.
 
 The `/movies` listing still needs to load its data at runtime, so its loading component can still appear.
+
+
+
+# Lab 4, part 2
+
+## Part E — Predictions
+
+| Page | Fetch option | Expected build output |
+|---|---|---|
+| `/movies` | `next: { revalidate: 10 }` | ○ with 10s revalidation |
+| `/movies/[id]` | `cache: "force-cache"` | ● prerendered pages |
+
+/movies uses ISR with a 10-second revalidation period.
+/movies/[id] uses SSG.
+The production build succeeded.
+The /movies page displayed all six movies.
+The cache header continued returning STALE during your test, despite regeneration logs.
+
+## Part F
+### Part F – Experiment 1: Sequential fetching
+2.87s
+Time to first byte
+2.87s
+Total loading time
+
+
+### Part F – Experiment 2: Suspense
+Measurement | Before Suspense | With Suspense
+Time to first byte | 2.87 s	| 0.17 s
+Total time	| 2.87 s | 2.70 s
+
+
+### Part F – Results
+Experiment	First byte	Total
+Sequential fetching	2.87 s	2.87 s
+With Suspense	0.17 s	2.70 s
+Suspense + Promise.all	0.15 s	1.66 s
