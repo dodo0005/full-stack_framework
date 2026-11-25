@@ -114,3 +114,22 @@ Experiment	First byte	Total
 Sequential fetching	2.87 s	2.87 s
 With Suspense	0.17 s	2.70 s
 Suspense + Promise.all	0.15 s	1.66 s
+
+
+
+## Part H — What happens when the API is stopped?
+
+With the API server stopped and the production Next.js server still running:
+
+| Page | Result |
+|---|---|
+| `/movies` | The movies still appear because the page was generated and cached by Next.js. |
+| `/movies/2` | The movie details still appear because the page was prerendered during the build (SSG). |
+| `/` | The homepage title and "Counting the votes..." fallback appear, but the Top 3 cannot load because the API is unavailable. |
+| `/movies-client` | "Loading movies..." appears first, followed by the error message because the browser cannot fetch the movies from the API. |
+
+The server-rendered pages can continue displaying previously generated HTML without contacting the API for every request. However, the homepage's Top 3 section uses uncached fetches, so it needs the API at request time.
+
+The client-rendered page also needs the API because the browser fetches the movie data after the page loads.
+
+When the API is unavailable, the Next.js server logs a fetch error. The client page catches its failed request and displays an error message instead of crashing.
