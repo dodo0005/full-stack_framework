@@ -9,12 +9,14 @@ const timeFormat = new Intl.DateTimeFormat("en-GB", {
 
 export async function TopMovies() {
   // First experiment: sequential fetching
-const [movies, { votes, countedAt }] = await Promise.all([
-  getMovies({ cache: "no-store" }),
-  getVotes({ cache: "no-store" }),
+const [movies, voteResults] = await Promise.all([
+  getMovies(),
+  getVotes(),
 ]);
 
-  const top = [...votes]
+const { votes, countedAt } = voteResults;
+
+const top = [...votes]
     .sort((a, b) => b.count - a.count)
     .slice(0, 3);
 

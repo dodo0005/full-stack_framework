@@ -1,5 +1,8 @@
 
 import "server-only";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { cache } from "react";
 
 export type Movie = {
   id: number;
@@ -19,47 +22,38 @@ export type VoteResults = {
   countedAt: string;
 };
 
-const API_URL =
-  process.env.MOVIES_API_URL ?? "http://127.0.0.1:4001";
+const LATENCY_MS = Number(process.env.DEMO_LATENCY_MS ?? 800);
 
-export async function getMovies(
-  init?: RequestInit,
-): Promise<Movie[]> {
-  const res = await fetch(`${API_URL}/api/movies`, init);
-
-  if (!res.ok) {
-    throw new Error(`Movie API responded with ${res.status}`);
-  }
-
-  return res.json();
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function getMovie(
-  id: string,
-  init?: RequestInit,
-): Promise<Movie | undefined> {
-  const res = await fetch(
-    `${API_URL}/api/movies/${encodeURIComponent(id)}`,
-    init,
+async function read<T>(file: string): Promise<T> {
+  return JSON.parse(
+    await readFile(path.join(process.cwd(), "data", file), "utf8")
   );
-
-  if (res.status === 404) return undefined;
-
-  if (!res.ok) {
-    throw new Error(`Movie API responded with ${res.status}`);
-  }
-
-  return res.json();
 }
 
-export async function getVotes(
-  init?: RequestInit,
-): Promise<VoteResults> {
-  const res = await fetch(`${API_URL}/api/votes`, init);
+export async function getMovies(): Promise<Movie[]> {
+  await wait(LATENCY_MS);
+  return read<Movie[]>("movies.json");
+}
 
-  if (!res.ok) {
-    throw new Error(`Movie API responded with ${res.status}`);
-  }
+export const getMovie = cache(async (id: number) => {
+  await wait(LATENCY_MS);
+  return (await read<Movie[]>("movies.json")).find(
+    (movie) => movie.id === id
+  );
+});
 
-  return res.json();
+export async function getVotes(): Promise<VoteResults> {
+  await wait(LATENCY_MS);
+  return {
+    votes: await read<Vote[]>("votes.json"),
+    countedAt: new Date().toISOString(),
+  };
+}
+
+export function parseId(value: string): number | null {
+  return /^[1-9]\d*$/.test(value) ? Number(value) : null;
 }

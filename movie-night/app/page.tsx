@@ -2,6 +2,8 @@ import Link from "next/link";
 import { TopMovies } from "@/components/top-movies";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <main className="mx-auto w-full max-w-2xl p-8">

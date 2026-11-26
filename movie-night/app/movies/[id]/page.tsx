@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getMovie, getMovies } from "@/lib/movies";
+import { getMovie, getMovies, parseId } from "@/lib/movies";
 
 // Only the ids returned by generateStaticParams exist: any other id is a 404
 export const dynamicParams = false;
 
 // Runs at build time: one HTML page per movie
 export async function generateStaticParams() {
-  const movies = await getMovies({
-    cache: "force-cache",
-  });
+  const movies = await getMovies();
 
   return movies.map((movie) => ({
     id: String(movie.id),
@@ -20,19 +18,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PageProps<"/movies/[id]">): Promise<Metadata> {
-  const { id } = await params;
-  const movie = await getMovie(id, {
-  cache: "force-cache",
-});
+const { id } = await params;
+const parsedId = parseId(id);
+const movie = parsedId === null ? undefined : await getMovie(parsedId);
   if (!movie) return {};
   return { title: movie.title };
 }
 
 export default async function MoviePage({ params }: PageProps<"/movies/[id]">) {
-  const { id } = await params;
-  const movie = await getMovie(id, {
-  cache: "force-cache",
-});
+const { id } = await params;
+const parsedId = parseId(id);
+const movie = parsedId === null ? undefined : await getMovie(parsedId);
   if (!movie) notFound();
 
   return (

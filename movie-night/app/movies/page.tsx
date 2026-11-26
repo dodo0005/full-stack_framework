@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { MovieList } from "@/components/movie-list";
 import { getMovies } from "@/lib/movies";
 
+export const revalidate = 10;
+
 
 export const metadata: Metadata = {
   title: "Movies | Movie Night",
@@ -10,9 +12,7 @@ export const metadata: Metadata = {
 
 
 export default async function MoviesPage() {
-  const movies = await getMovies({
-  next: { revalidate: 10 },
-});
+  const movies = await getMovies();
   console.log(`[movies] rendered ${movies.length} movies`);
 
   return (
